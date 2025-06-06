@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
+import { TodoService } from '../../shared/services/todo.service';
 
 @Component({
   selector: 'app-new-task',
@@ -20,7 +21,6 @@ export class NewTaskComponent {
       completed: false
     };
 
-    this.todoService.addTodo(newTodo);
     this.todoService.addTodo(newTodo);
     this.newTaskTitle = '';
     this.count++
