@@ -27,6 +27,11 @@
   text-decoration: line-through;
 }
 
+.todo-item_actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .todo-item_edit{
   color: blue;
   width: 10px;
