@@ -23,6 +23,6 @@ export class NewTaskComponent {
 
     this.todoService.addTodo(newTodo);
     this.newTaskTitle = '';
-    this.count++
+    // this.count++
   }
 }
