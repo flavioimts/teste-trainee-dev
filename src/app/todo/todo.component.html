@@ -4,7 +4,7 @@
   </div>
   <div class="todo-buttons">
     <button class="toggle-button" (click)="toggleCompletedTasks()">
-      {{ showCompletedTasks ? 'Exibir Tarefas Concluídas' : 'Ocultar Tarefas Concluídas' }}
+      {{ showCompletedTasks ? 'Ocultar Tarefas Concluídas' : 'Exibir Tarefas Concluídas' }}
     </button>
     <button (click)="clearCompletedTasks()">Limpar Tarefas Concluídas</button>
     <button (click)="clearAll()" [innerHTML]="labelClearAll"></button>
