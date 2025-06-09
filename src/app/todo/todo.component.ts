@@ -52,10 +52,21 @@ export class TodoComponent implements OnInit {
   }
 
   clearCompletedTasks() {
-    this.todoService.clearCompletedTasks();
-    this.loadTodos();
+    const completedTodos = this.todos.filter(todo => todo.completed);
+    
+    if (completedTodos.length === 0) {
+      alert("Não há tarefas concluídas para limpar.");
+      return;
+    }
+  
+    if (confirm(`Você tem certeza que deseja limpar ${completedTodos.length} tarefa(s) concluída(s)?`)) {
+      completedTodos.forEach(todo => {
+        this.todoService.deleteTodo(todo.id);
+      });
+      this.loadTodos();
+    }
   }
-
+  
   toggleCompletedTasks() {
     this.showCompletedTasks = !this.showCompletedTasks;
   }
