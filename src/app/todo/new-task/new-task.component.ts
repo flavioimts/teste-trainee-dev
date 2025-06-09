@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from 'src/app/shared/services/todo.service';
 
@@ -7,7 +7,9 @@ import { TodoService } from 'src/app/shared/services/todo.service';
   templateUrl: './new-task.component.html',
   styleUrls: ['./new-task.component.css']
 })
-export class NewTaskComponent {
+export class NewTaskComponent implements OnChanges {
+  @Input() editingTodo: Todo | null = null;
+  @Output() taskSaved: EventEmitter<Todo> = new EventEmitter<Todo>();
   newTaskTitle: string = '';
 
   constructor(private todoService: TodoService) { }
@@ -18,13 +20,26 @@ export class NewTaskComponent {
       return;
     }
 
-    const newTodo: Todo = {
-      id: this.todoService.getTodoNewId(),
-      title: this.newTaskTitle,
-      completed: false
-    };
+    if (this.editingTodo) {
+      this.editingTodo.title = this.newTaskTitle;
+      this.todoService.updateTodo(this.editingTodo);
+      this.editingTodo = null;
+    } else {
+      const newTodo: Todo = {
+        id: this.todoService.getTodoNewId(),
+        title: this.newTaskTitle,
+        completed: false
+      };
+      this.todoService.addTodo(newTodo);
+    }
 
-    this.todoService.addTodo(newTodo);
     this.newTaskTitle = '';
+    this.taskSaved.emit();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["editingTodo"] && this.editingTodo) {
+      this.newTaskTitle = this.editingTodo.title;
+    }
   }
 }

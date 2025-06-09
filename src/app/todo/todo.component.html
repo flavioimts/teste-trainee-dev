@@ -1,6 +1,6 @@
 <div class="todo-container">
   <div class="todo-form">
-    <app-new-task></app-new-task>
+    <app-new-task [editingTodo]="editingTodo" (taskSaved)="loadTodos()"></app-new-task>
   </div>
   <div class="todo-buttons">
     <button class="toggle-button" (click)="toggleCompletedTasks()">
@@ -14,6 +14,7 @@
       <app-todo-item
         *ngFor="let todo of todos"
         [todo]="todo"
+        (editTodoEvent)="onEditTodo($event)"
       ></app-todo-item>
     </div>
   </div>
