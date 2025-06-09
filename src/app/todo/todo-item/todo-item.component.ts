@@ -14,7 +14,7 @@ export class TodoItemComponent {
   constructor(private todoService: TodoService) {}
 
   deleteTodo(): void {
-    if (confirm('Are you sure you want to delete this task?')) {
+    if (confirm('Você tem certeza de que deseja deletar essa atividade?')) {
       this.todoService.deleteTodo(this.todo.id);
     }
   }
