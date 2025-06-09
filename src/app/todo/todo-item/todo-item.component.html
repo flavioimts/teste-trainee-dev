@@ -11,10 +11,12 @@
       [ngClass]="{'completed': todo.completed, 'incomplete': !todo.completed}"
     >{{ todo.title }}</label>
   </div>
-  <button class="todo-item_edit">
-    <i class="fas fa-edit fa-lg"></i> Editar
-  </button>
-  <button class="todo-item_delete" style="color: black" (click)="deleteTodo()">
-    <i class="fas fa-trash-alt fa-lg"></i> Remover
-  </button>
+  <div class="todo-item_actions">
+    <button class="todo-item_edit" (click)="editTodo()">
+      <i class="fas fa-edit fa-lg"></i> Editar
+    </button>
+    <button class="todo-item_delete" (click)="deleteTodo()">
+      <i class="fas fa-trash-alt fa-lg"></i> Remover
+    </button>
+  </div>
 </div>

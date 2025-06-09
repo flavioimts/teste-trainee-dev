@@ -1,6 +1,16 @@
 .todo-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  border: 2px solid #f1f5f9;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.todo-item:hover {
+  border-color: #e2e8f0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .todo-item_content {
@@ -27,20 +37,42 @@
   text-decoration: line-through;
 }
 
-.todo-item_edit{
+.todo-item_actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-item_edit {
   color: blue;
   width: 10px;
   width: fit-content;
+  cursor: pointer;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: #e2eefe;
 }
+
+.todo-item_edit:hover {
+  background: #56a1f7;
+  color: #fff;
+}
+
 .todo-item_delete {
   width: 10px;
   width: fit-content;
   color: red;
-  background: none;
-  border: none;
   cursor: pointer;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: #fee2e2;
 }
 
+.todo-item_delete:hover {
+  background: #f85454;
+  color: #fff;
+}
 
 .fa-trash-alt:hover {
   color: rgba(65, 63, 63, 0.62);
