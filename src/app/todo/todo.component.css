@@ -16,7 +16,7 @@
   max-width: 51.5rem;
   padding: 2.5rem;
   width: 80vw;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 .todo-list_todo {
