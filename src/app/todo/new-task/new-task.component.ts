@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from 'src/app/shared/services/todo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-task',
@@ -16,7 +17,11 @@ export class NewTaskComponent implements OnChanges {
 
   addTask() {
     if (!this.newTaskTitle.trim()) {
-      alert('Por favor, insira um título para a tarefa.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campo obrigatório',
+        text: 'Por favor, insira um título para a tarefa.',
+      });
       return;
     }
 
