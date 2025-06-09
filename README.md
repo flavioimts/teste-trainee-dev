@@ -1,4 +1,4 @@
-# Relatório Técnico
+# Relatório Técnico - [Lucivando Sousa]
 
 ## Visão Geral
 
