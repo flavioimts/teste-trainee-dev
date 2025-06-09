@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from '../../shared/services/todo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-todo-item',
@@ -14,9 +15,25 @@ export class TodoItemComponent {
   constructor(private todoService: TodoService) {}
 
   deleteTodo(): void {
-    if (confirm('Are you sure you want to delete this task?')) {
-      this.todoService.deleteTodo(this.todo.id);
-    }
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você tem certeza de que deseja deletar essa atividade?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, deletar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.todoService.deleteTodo(this.todo.id);
+        Swal.fire(
+          'Deletado!',
+          'A atividade foi deletada com sucesso.',
+          'success'
+        );
+      }
+    });
   }
 
   onTaskChecked(): void {
