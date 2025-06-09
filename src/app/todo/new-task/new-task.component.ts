@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
+import { TodoService } from '../../shared/services/todo.service';
+import { Filter } from 'bad-words';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-task',
@@ -11,18 +14,35 @@ export class NewTaskComponent {
 
   constructor(private todoService: TodoService) { }
 
-  count = 0;
   addTask() {
-    if(this.count > 0) return
-    const newTodo: Todo = {
-      id: this.todoService.getTodoNewId(),
-      title: this.newTaskTitle,
-      completed: false
-    };
+    if (!this.newTaskTitle) return;
 
-    this.todoService.addTodo(newTodo);
-    this.todoService.addTodo(newTodo);
+    const filter = new Filter();
+
+    const titles = this.newTaskTitle.split('|').map(t => t.trim()).filter(t => t.length > 0);
+
+    if (titles.length === 0) return;
+
+    const hasBadWords = titles.some(title => filter.isProfane(title));
+
+    if (hasBadWords) {
+      Swal.fire({
+        icon: 'error',
+        title: '',
+        text: 'Não é permitido cadastrar tarefas com palavras obscenas.'
+      });
+      return;
+    }
+
+    titles.forEach(title => {
+      const newTodo: Todo = {
+        id: this.todoService.getTodoNewId(),
+        title: title,
+        completed: false
+      };
+      this.todoService.addTodo(newTodo);
+    });
+  
     this.newTaskTitle = '';
-    this.count++
   }
 }
