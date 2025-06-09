@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
 import Swal from 'sweetalert2';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-todo',
@@ -57,7 +58,7 @@ export class TodoComponent implements OnInit {
       if (result.isConfirmed) {
         this.todoService.clearAll();
         this.loadTodos();
-        
+
         Swal.fire({
           icon: 'success',
           title: 'Tarefas limpas!',
@@ -103,7 +104,7 @@ export class TodoComponent implements OnInit {
     return this.showCompletedTasks ? this.todos : this.todos.filter(todo => !todo.completed);
   }
 
-  get labelClearAll(){
+  get labelClearAll() {
     return 'Limpar Todas'
   }
 
@@ -113,5 +114,33 @@ export class TodoComponent implements OnInit {
 
   sortTodosByTitle() {
     this.todos.sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  exportToPDF() {
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text('Lista de Tarefas', 14, 22);
+
+    doc.setFontSize(12);
+    let yPosition = 30;
+
+    if (this.todos.length === 0) {
+      doc.text('Nenhuma tarefa para exibir.', 14, yPosition);
+    } else {
+      this.todos.forEach((todo, index) => {
+        const status = todo.completed ? '[Concluído]' : '[Pendente]';
+        const text = `${index + 1}. ${todo.title} ${status}`;
+        doc.text(text, 14, yPosition);
+        yPosition += 10;
+        
+        if (yPosition > 280) {
+          doc.addPage();
+          yPosition = 20;
+        }
+      });
+    }
+
+    doc.save('tarefas.pdf');
   }
 }
