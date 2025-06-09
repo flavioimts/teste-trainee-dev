@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
 import Swal from 'sweetalert2';
+import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-todo',
@@ -99,15 +100,38 @@ export class TodoComponent implements OnInit {
   }
 
   sortTasksAZ() {
-  const notCompleted = this.todos
-    .filter(todo => !todo.completed)
-    .sort((a, b) => a.title.localeCompare(b.title));
+    const notCompleted = this.todos
+      .filter(todo => !todo.completed)
+      .sort((a, b) => a.title.localeCompare(b.title));
 
-  const completed = this.todos.filter(todo => todo.completed);
+    const completed = this.todos.filter(todo => todo.completed);
 
-  this.todos = [...notCompleted, ...completed];
-}
+    this.todos = [...notCompleted, ...completed];
+  }
 
+  exportPdf() {
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text('Lista de Tarefas', 14, 22);
+
+    doc.setFontSize(12);
+    let yPos = 30;
+
+    this.todos.forEach((todo) => {
+      const status = todo.completed ? '[x]' : '[ ]';
+      const line = `${status} ${todo.title}`;
+      doc.text(line, 14, yPos);
+      yPos += 10;
+
+      if (yPos > 280) {
+        doc.addPage();
+        yPos = 20;
+      }
+    });
+
+    doc.save('tarefas.pdf');
+  }
 
   filteredTodos() {
     return this.showCompletedTasks ? this.todos : this.todos.filter(todo => !todo.completed);
