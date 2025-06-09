@@ -71,6 +71,17 @@ export class TodoComponent implements OnInit {
     this.showCompletedTasks = !this.showCompletedTasks;
   }
 
+  sortTasksAZ() {
+  const notCompleted = this.todos
+    .filter(todo => !todo.completed)
+    .sort((a, b) => a.title.localeCompare(b.title));
+
+  const completed = this.todos.filter(todo => todo.completed);
+
+  this.todos = [...notCompleted, ...completed];
+}
+
+
   filteredTodos() {
     return this.showCompletedTasks ? this.todos : this.todos.filter(todo => !todo.completed);
   }
