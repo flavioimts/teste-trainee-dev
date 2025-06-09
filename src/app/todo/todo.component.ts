@@ -69,10 +69,6 @@ export class TodoComponent implements OnInit {
   }
 
   clearCompletedTasks() {
-    // if (this.todos.length > 0 && confirm('Tem certeza de que deseja limpar todas as tarefas concluídas?')) {
-    //   this.todoService.clearCompletedTasks();
-    //   this.loadTodos();
-    // }
     Swal.fire({
       title: 'Limpar tarefas concluídas',
       text: 'Tem certeza de que deseja limpar todas as tarefas concluídas?',
@@ -113,5 +109,9 @@ export class TodoComponent implements OnInit {
 
   onEditTodo(todo: Todo): void {
     this.editingTodo = todo;
+  }
+
+  sortTodosByTitle() {
+    this.todos.sort((a, b) => a.title.localeCompare(b.title));
   }
 }
