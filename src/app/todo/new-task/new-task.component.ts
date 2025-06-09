@@ -12,22 +12,18 @@ export class NewTaskComponent {
 
   constructor(private todoService: TodoService) { }
 
-  count = 0;
   addTask() {
-    if(this.count > 0) return;
-    
-    // Impede salvar que tarefa vazia ou só com espaços
-    if (!this.newTaskTitle || !this.newTaskTitle.trim())
-      return;
+    const trimmedTitle = this.newTaskTitle.trim();
+
+    if (!trimmedTitle) return;
 
     const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
-      title: this.newTaskTitle.trim(),
+      title: trimmedTitle,
       completed: false
     };
 
     this.todoService.addTodo(newTodo);
     this.newTaskTitle = '';
-    // this.count++
   }
 }
