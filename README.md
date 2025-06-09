@@ -135,3 +135,9 @@ Acesse a aplicação em seu navegador:
 * Melhoria: Todos os diálogos de alerta e confirmação do sistema foram trocados pelas janelas estilizadas e personalizáveis da biblioteca SweetAlert.
 
 * Benefício: A interface ganhou uma melhor experiência do usuário, com mensagens mais claras e esteticamente agradáveis.
+
+**4. Adição da funcionalidade de exportação de tarefas em PDF**
+
+* Melhoria: Implementada a capacidade de exportar a lista de tarefas atual em formato PDF, permitindo uma visualização mais organizada e compartilhável.
+
+* Benefício: Os usuários podem facilmente salvar, imprimir ou compartilhar a lista de tarefas em formato PDF, facilitando a organização e o compartilhamento de informações.
