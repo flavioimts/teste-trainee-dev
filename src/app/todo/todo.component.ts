@@ -31,14 +31,17 @@ export class TodoComponent implements OnInit {
     };
 
     this.todoService.addTodo(newTodo);
+    this.loadTodos(); 
   }
 
   updateTodo(updatedTodo: Todo) {
     this.todoService.updateTodo(updatedTodo);
+    this.loadTodos();
   }
 
   deleteTodo(todoId: number) {
     this.todoService.deleteTodo(todoId);
+    this.loadTodos();
   }
 
   clearAll() {
@@ -55,8 +58,6 @@ export class TodoComponent implements OnInit {
 
   toggleCompletedTasks() {
     this.showCompletedTasks = !this.showCompletedTasks;
-    this.loadTodos();
-    this.todos = this.filteredTodos();
   }
 
   filteredTodos() {
@@ -66,4 +67,8 @@ export class TodoComponent implements OnInit {
   get labelClearAll(){
     return 'Clear All'
   }
-}
+
+  get toggleButtonLabel() {
+    return this.showCompletedTasks ? 'Ocultar Tarefas Concluídas' : 'Exibir Tarefas Concluídas';
+  }
+ }
