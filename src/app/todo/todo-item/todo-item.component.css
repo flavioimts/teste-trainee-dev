@@ -32,6 +32,7 @@
   width: 10px;
   width: fit-content;
 }
+
 .todo-item_delete {
   width: 10px;
   width: fit-content;
@@ -41,7 +42,12 @@
   cursor: pointer;
 }
 
-
 .fa-trash-alt:hover {
   color: rgba(65, 63, 63, 0.62);
+}
+
+.todo-item_actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
