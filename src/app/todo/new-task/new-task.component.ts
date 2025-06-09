@@ -14,10 +14,15 @@ export class NewTaskComponent {
 
   count = 0;
   addTask() {
-    if(this.count > 0) return
+    if(this.count > 0) return;
+    
+    // Impede salvar que tarefa vazia ou só com espaços
+    if (!this.newTaskTitle || !this.newTaskTitle.trim())
+      return;
+
     const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
-      title: this.newTaskTitle,
+      title: this.newTaskTitle.trim(),
       completed: false
     };
 
