@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-todo',
@@ -45,26 +46,52 @@ export class TodoComponent implements OnInit {
   }
 
   clearAll() {
-    if (this.todos.length > 0 && confirm('Você tem certeza de que deseja limpar todas as tarefas?')) {
+    if (this.todos.length === 0) return;
+
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você deseja limpar todas as tarefas?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, limpar tudo',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6'
+    }).then((result) => {
+     if (result.isConfirmed) {
       this.todoService.clearAll();
       this.loadTodos();
-    }
+      Swal.fire('Limpo!', 'Todas as tarefas foram removidas.', 'success');
+      }
+    });
   }
 
   clearCompletedTasks() {
     const completedTodos = this.todos.filter(todo => todo.completed);
-    
+
     if (completedTodos.length === 0) {
-      alert("Não há tarefas concluídas para limpar.");
+      Swal.fire('Nada a limpar', 'Não há tarefas concluídas para limpar.', 'info');
       return;
     }
-  
-    if (confirm(`Você tem certeza que deseja limpar ${completedTodos.length} tarefa(s) concluída(s)?`)) {
-      completedTodos.forEach(todo => {
-        this.todoService.deleteTodo(todo.id);
-      });
-      this.loadTodos();
-    }
+
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: `Deseja limpar ${completedTodos.length} tarefa(s) concluída(s)?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, limpar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        completedTodos.forEach(todo => {
+          this.todoService.deleteTodo(todo.id);
+        });
+        this.loadTodos();
+        Swal.fire('Concluído!', 'Tarefas concluídas foram removidas.', 'success');
+      }
+    });
   }
   
   toggleCompletedTasks() {
