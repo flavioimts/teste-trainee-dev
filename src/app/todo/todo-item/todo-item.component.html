@@ -11,10 +11,21 @@
       [ngClass]="{'completed': todo.completed, 'incomplete': !todo.completed}"
     >{{ todo.title }}</label>
   </div>
-  <button class="todo-item_edit">
+  <button class="todo-item_edit" (click)="editTodo()">
     <i class="fas fa-edit fa-lg"></i> Editar
   </button>
   <button class="todo-item_delete" style="color: black" (click)="deleteTodo()">
     <i class="fas fa-trash-alt fa-lg"></i> Remover
   </button>
+
+  <div class="modal" *ngIf="isEditing">
+  <div class="modal-content">
+    <h3>Editar Tarefa</h3>
+    <input [(ngModel)]="editedTitle" placeholder="Novo nome da tarefa" />
+    <div class="modal-actions">
+      <button (click)="saveEdit()">Salvar</button>
+      <button (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </div>
+</div>
 </div>

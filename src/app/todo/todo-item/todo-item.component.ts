@@ -10,8 +10,32 @@ import { TodoService } from '../../shared/services/todo.service';
 export class TodoItemComponent {
   @Input() todo!: Todo;
   @Output() deletedTodo: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onUpdate = new EventEmitter<Todo>();
 
   constructor(private todoService: TodoService) {}
+
+  isEditing: boolean = false;
+  editedTitle: string = '';
+
+  editTodo() {
+    this.isEditing = true;
+    this.editedTitle = this.todo.title;
+  }
+
+    saveEdit() {
+    if (this.editedTitle.trim()) {
+      const updatedTodo: Todo = {
+        ...this.todo,
+        title: this.editedTitle.trim()
+      };
+      this.onUpdate.emit(updatedTodo);
+    }
+    this.isEditing = false;
+  }
+
+  cancelEdit() {
+    this.isEditing = false;
+  }
 
   deleteTodo(): void {
     if (confirm('Are you sure you want to delete this task?')) {
