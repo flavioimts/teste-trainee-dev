@@ -9,11 +9,13 @@ import { TodoService } from 'src/app/shared/services/todo.service';
 })
 export class NewTaskComponent {
   newTaskTitle: string = '';
+  
 
   constructor(private todoService: TodoService) { }
 
   // count = 0;
   addTask() {
+    if (!this.newTaskTitle.trim()) return;
     // if(this.count > 0) return
     const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
