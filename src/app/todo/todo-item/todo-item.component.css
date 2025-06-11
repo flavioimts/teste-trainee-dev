@@ -29,7 +29,7 @@
 
 .todo-item_actions {
   display: flex;
-  gap: 10px; /* Espaço entre os botões */
+  gap: 10px;
   align-items: center;
 }
 
