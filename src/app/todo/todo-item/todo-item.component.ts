@@ -12,6 +12,7 @@ export class TodoItemComponent {
   @Output() deletedTodo: EventEmitter<number> = new EventEmitter<number>();
   @Output() onUpdate = new EventEmitter<Todo>();
 
+
   constructor(private todoService: TodoService) {}
 
   isEditing: boolean = false;
