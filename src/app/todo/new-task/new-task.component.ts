@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from 'src/app/shared/services/todo.service';
+import { Filter } from 'bad-words'; 
+
 
 @Component({
   selector: 'app-new-task',
@@ -9,8 +11,12 @@ import { TodoService } from 'src/app/shared/services/todo.service';
 })
 export class NewTaskComponent {
   newTaskTitle: string = '';
+  private filter = new Filter();
   
-  constructor(private todoService: TodoService) { }
+  constructor(private todoService: TodoService) { 
+    this.filter.addWords('nojento', 'seboso');
+    this.filter.removeWords('merda'); 
+  }
 
   // count = 0;
   addTask() {
@@ -23,9 +29,10 @@ export class NewTaskComponent {
       .map(title => title.trim())
       .filter(title => title.length > 0);
 
-    let nextId = this.todoService.getTodoNewId();
-
-    for (const title of titles){
+    for (let title of titles){
+      if (this.filter.isProfane(title)) {
+        title = this.filter.clean(title);
+      }
     // if(this.count > 0) return
     const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
@@ -38,5 +45,6 @@ export class NewTaskComponent {
     // this.todoService.addTodo(newTodo);
     this.newTaskTitle = '';
     // this.count++
+    
   }
 }
