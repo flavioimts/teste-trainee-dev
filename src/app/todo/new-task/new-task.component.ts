@@ -10,20 +10,31 @@ import { TodoService } from 'src/app/shared/services/todo.service';
 export class NewTaskComponent {
   newTaskTitle: string = '';
   
-
   constructor(private todoService: TodoService) { }
 
   // count = 0;
   addTask() {
     if (!this.newTaskTitle.trim()) return;
+
+        if (!this.newTaskTitle.trim()) return;
+
+    const titles = this.newTaskTitle
+      .split('|')
+      .map(title => title.trim())
+      .filter(title => title.length > 0);
+
+    let nextId = this.todoService.getTodoNewId();
+
+    for (const title of titles){
     // if(this.count > 0) return
     const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
-      title: this.newTaskTitle,
+      title: title,
       completed: false
     };
 
     this.todoService.addTodo(newTodo);
+    }
     // this.todoService.addTodo(newTodo);
     this.newTaskTitle = '';
     // this.count++
