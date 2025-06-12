@@ -1,123 +1,202 @@
-# Desafio de Código: Gerenciador de Tarefas (Angular)
+# Relatório Técnico - [Samuel Gomes Vieira]
 
-## 1. Visão Geral do Projeto
+## Visão Geral da Solução
+Este projeto consiste em uma aplicação Angular para gerenciamento de tarefas (Todo List) com funcionalidades completas, incluindo criação, edição, remoção, filtragem e exportação das tarefas com dados mockados. Durante o desenvolvimento, foram realizadas correções de bugs iniciais, aprimoramentos na usabilidade e implementação de melhorias técnicas utilizando bibliotecas como bad-words, jsPDF e SweetAlert2 para otimizar a experiência do usuário.e experiência do usuário.
 
-Bem-vindo(a) ao nosso desafio de código!
+## ⚙️ Pré-requisitos
 
-Este repositório contém o código-fonte de uma aplicação de gerenciamento de tarefas desenvolvida em Angular. O projeto foi iniciado por um fornecedor anterior, mas foi entregue incompleto, instável e com diversos bugs.
+Antes de iniciar, certifique-se de ter instalado:
 
----
+- Git
+- Node.js **v14.2.0** (use o NVM para instalar)
+- Angular CLI **v16.2.12**
+- Yarn (Necessário para instalar dependências do projeto)
 
-## 2. O Cenário
+## 🚀 Instalação e Setup
 
-A empresa IMTS Group precisa de uma aplicação funcional para que seus colaboradores gerenciem suas tarefas. O projeto foi entregue com uma série de problemas que impedem até mesmo sua inicialização, além de falhas de funcionalidade e usabilidade identificadas por um analista de qualidade (QA).
+### 1. Fork e Clone
 
----
+```bash
+# Faça o fork deste repositório no GitHub
+# Depois, clone o seu fork:
+git clone https://github.com/seu-usuario/seu-fork-do-projeto.git
+cd seu-fork-do-projeto
+```
 
-## 3. Sua Missão
+### 2. Configuração de Ambiente
 
-Sua missão é assumir este projeto e transformá-lo em uma aplicação robusta e funcional. Você deverá:
-1.  **Diagnosticar e corrigir os erros** que atualmente impedem a aplicação de iniciar com o comando `npm start`.
-2.  **Implementar todas as correções e melhorias** detalhadas na lista de requisitos técnicos abaixo.
-3.  **Entregar o projeto final** seguindo as instruções de entrega.
+#### 🔧 Versões
 
----
+- **Node.js:** v14.2.0
+- **Angular CLI:** v16.2.12
 
-## 4. Como Começar
+#### 🛠️ Como instalar as versões corretas
 
-Para configurar o ambiente, siga os passos:
+- Instale o [NVM para Windows](https://github.com/coreybutler/nvm-windows/releases)
+- Instale a versão correta do Node:
 
-1.  **Clone o repositório** para sua máquina local.
-2.  **Instale as dependências** do projeto:
-    ```bash
-    npm install
-    ```
-3.  **Tente iniciar o servidor** de desenvolvimento:
-    ```bash
-    npm start
-    ```
+```bash
+nvm install 14.2.0
+nvm use 14.2.0
+```
 
-> **Atenção:** A aplicação não irá iniciar corretamente. Seu primeiro desafio é investigar e consertar os erros que impedem a execução bem-sucedida deste comando.
+- Instale o Angular CLI:
 
----
+```bash
+npm install -g @angular/cli@16.2.12
+```
 
-## 5. Requisitos Técnicos (Lista de Tarefas do QA)
+- Instale dependências:
 
-A seguir estão os pontos exatos que você deve abordar.
+```bash
+npm install
+# ou
+yarn install
+```
 
-### 5.1. Bugs a Corrigir
+## ▶️ Erros que impedem de iniciar o projeto
 
-1.  Ao clicar no botão “Salvar”, a tarefa está sendo adicionada duas vezes.
-2.  Só está sendo possível salvar uma tarefa a primeira vez que clica no botão “Salvar”, só é possível salvar uma nova tarefa após atualizar a página (F5)
-3.  O texto do botão de limpar todas as tarefas não está em português.
-4.  O botão “Exibir Tarefas Concluídas” está, na verdade, ocultando as tarefas concluídas.
-5.  O botão “Ocultar Tarefas Concluídas” tem o comportamento invertido, exibindo as tarefas concluídas.
-6.  Ao clicar em “Limpar Tarefas Concluídas”, a ação é executada sem pedir uma confirmação ao usuário.
-7.  O botão “Limpar Tarefas Concluídas” está removendo as tarefas não concluídas em vez das concluídas.
-8.  O botão “Editar” não está funcional. O comportamento esperado é: ao clicar, o campo “Título da Tarefa” deve ser preenchido com o texto da tarefa selecionada. Ao salvar, o item na lista deve ser atualizado e o campo de texto limpo.
-9.  O botão “Editar” está desalinhado e deve ser posicionado ao lado do botão “Remover”.
-10.  O botão “Remover” deve ter a cor vermelha para indicar uma ação destrutiva.
-11. A lista de tarefas não apresenta uma barra de rolagem quando o número de itens ultrapassa a altura do painel, impedindo a visualização de todas as tarefas.
-12. Salvar sem digitar um “Título da Tarefa” está adicionando um item em branco à lista.
-13. Digitar apenas espaços no campo “Título da Tarefa” e salvar também está adicionando um item em branco.
+1° - Erro: 'HeaderComponent' (imported as 'HeaderComponent') was not found
 
-### 5.2. Melhorias a Implementar
+Causa: nomenclatura errada da importação HeaderComponent
+Solução: localize a pasta no seguinte caminho: `src\app\layout\header\header.component.ts` altere a classe que estava sendo exportada com o nome “HeadeComponent” e importada com o nome “HeaderComponent”
 
-1.  Implementar um botão “Ordenar de A a Z” que, ao ser clicado, ordene alfabeticamente a lista de tarefas visíveis.
-2.  Permitir que o usuário adicione uma tarefa pressionando a tecla `Enter` no campo de texto, além do clique no botão “Salvar”.
-3.  Permitir a adição de múltiplas tarefas de uma só vez. O usuário deverá digitar os títulos separados pelo caractere `|` (pipe).
-4.  Implementar um filtro de palavras obscenas. Caso o usuário tente cadastrar uma tarefa contendo um palavrão, exiba a mensagem: “Não é permitido cadastrar tarefas com palavras obscenas.” (Sugestão de biblioteca: `https://github.com/web-mech/badwords`).
-5.  Adicionar a funcionalidade de exportar a lista de tarefas atual para um arquivo PDF. (Sugestão de biblioteca: `https://github.com/parallax/jsPDF`).
-6.  Substituir todos os `alert`s e `confirm`s nativos do navegador por uma experiência mais moderna, utilizando a biblioteca SweetAlert. (Sugestão: `https://sweetalert2.github.io/`).
+Segundo lugar para ajustar: corrigir o erro de digitação em `export class HeadeComponent implements OnInit` localizado no arquivo header.component.ts no caminho: teste-trainee-dev\src\app\layout\header\header.component.ts
 
----
+```
+2° - Erro de importação do TodoService.
 
-## 6. Instruções de Entrega
+Causa: Não tem a importação do arquivo no incio do arquivo.
+Solução: no arquivo new-task.component.ts localizado em src/app/shared/services/, faça a importação do arquivo import { TodoService } from 'src/app/shared/services/todo.service
 
-Ao finalizar todo o trabalho, você deve:
 
-1.  **Fazer o commit de cada item separadamente**, conforme detalhado na seção "Boas Práticas" abaixo. O histórico de commits é uma parte crucial da avaliação. 
+3° - Error: Cannot find module '@babel/compat-data/plugins.js'
 
-2.  **Substituir o conteúdo deste `README.md`** pelo seu relatório técnico final. O seu relatório deve conter as seguintes seções:
+Causa: faltando o modulo do pacote babel no package.json
+Solução: no terminal coloque o comando -> npm install --save-dev @babel/compat-data
 
-    * **Relatório Técnico - [Seu Nome]**
-    * **1. Visão Geral da Solução:** Um breve resumo do que foi feito.
-    * **2. Como Executar a Aplicação:** Instruções claras para clonar, instalar e rodar o projeto (`npm install`, `npm start`).
-    * **3. Correção dos Erros Iniciais (`npm start`):** Descreva quais eram os erros que impediam a aplicação de rodar e como você os solucionou.
-    * **4. Relatório de Correção de Bugs:** Para cada bug da lista, explique a causa raiz e a solução que você implementou.
-    * **5. Relatório de Implementação de Melhorias:** Para cada melhoria, descreva sua abordagem técnica e quais bibliotecas foram utilizadas.
-    * **6. Relatório de Débito Técnico:** Para cada ítem da lista de bugs e melhorias que você não conseguiu resolver ou implementar, descreva quais foram as dificuldades que você enfrentou na qual fizerem com que você não tenha conseguido entregar.
-    * **7. Relatório de Melhorias:** Descreva quais melhorias (novas funcionalidades) você acha interessante que sejam implementadas para evoluir o sistema.
-    * **8. Decisões e Considerações:** (Opcional) Espaço para comentar qualquer decisão de arquitetura ou desafio interessante que você encontrou.
-    
 
----
+4° Can't resolve 'node_modules/@fortawesome/fontawesome-free/css/all.min.css'
 
-## 7. Boas Práticas e Uso de Ferramentas
+Causa: faltando o modulo do pacote fontawesome-free/css/all.min.css no package.json
+Solução: rode o comando -> npm install @fortawesome/fontawesome-free
 
-### Commits Atômicos
-Cada bug corrigido e cada melhoria implementada deve ser um commit individual no repositório. Suas mensagens de commit devem ser claras e descritivas (ex: `fix: corrige a duplicação de tarefas ao salvar` ou `feat: implementa a exportação para PDF`). Isso é fundamental para avaliarmos seu processo de desenvolvimento.
 
-### Uso de Inteligência Artificial
-O uso de ferramentas de Inteligência Artificial (como ChatGPT, GitHub Copilot, etc.) é permitido como um recurso de apoio. No entanto, o mais importante é que você **entenda profundamente** o código e as soluções que está entregando. Esteja preparado(a) para explicar suas escolhas e defender a lógica implementada no relatório e na entrevista técnica, pois o conhecimento da solução é de sua total responsabilidade.
 
----
+## ▶️ Executando o Projeto
 
-## 8. Critérios de Avaliação
+```bash
+ng serve
+```
 
-Lembre-se que avaliaremos:
-* **Funcionalidade:** Cumprimento de todos os requisitos.
-* **Qualidade do Código:** Legibilidade, organização e boas práticas.
-* **Lógica e Eficiência:** Robustez das suas soluções.
-* **Comunicação:** Clareza do seu relatório técnico (`README.md`).
-* **Controle de Versão:** Qualidade e granularidade das suas mensagens de commit.
+Verifique se o `package.json` contém:
 
----
+```json
+"scripts": {
+  "start": "ng serve"
+}
+```
 
-## 9. Uma Palavra Final
+## 🐞 Correções de Bugs
 
-Entendemos que desafios como este podem ser complexos. Se você não conseguir concluir 100% dos itens, não desanime! Entregue o máximo que conseguir e documente seu progresso.
+### 1. Duplicação de tarefas ao clicar em "Salvar"
 
-Para nós, a jornada é tão importante quanto o destino. Não estamos buscando um profissional que saiba tudo, mas sim alguém com vontade de aprender, evoluir e que entenda que os erros são parte fundamental do crescimento.
+- Arquivo: `new-task.component.ts`
+- Solução: Remoção da linha duplicada `this.todoService.addTodo(newTodo);`
 
-**Boa sorte!**
+### 2. Só é possível adicionar tarefa uma vez
+
+- Arquivo: `new-task.component.ts`
+- Solução: Comentadas variáveis `count = 0;`, `if (this.count > 0) return;` e `this.count++`.
+
+### 3. Texto do botão "Clear All" em inglês
+
+- Arquivo: `todo.component.html`
+- Solução: Tradução do botão para **"Limpar Todas as Tarefas"**
+
+### 4/5. Comportamento invertido nos botões de exibir/ocultar tarefas concluídas
+
+- Arquivo: `todo.component.html`
+- Solução: Corrigido texto condicional.
+
+### 6. Falta de confirmação ao limpar tarefas concluídas
+
+- Arquivo: `todo.component.ts`
+- Solução: Adicionada confirmação com `confirm(...)` (posteriormente substituída por SweetAlert).
+
+### 7. Botão "Limpar Tarefas Concluídas" removia tarefas não concluídas
+
+- Arquivo: `todo.service.ts`
+- Solução: Criada função para filtrar tarefas não concluídas.
+
+### 8. Botão “Editar” não funcional
+
+- Arquivos: `todo-item.component.ts`, `todo-item.component.html`, `todo.component.html`, `todo-item.component.css`
+- Solução: Criação do modal de edição, lógica de salvamento e atualização do item.
+
+### 11. Estilo e alinhamento dos botões "Editar" e "Remover"
+
+- Arquivo: `todo-item.component.css`
+- Solução: Aplicado estilo com `flex`, cores e espaçamento.
+
+### 12/13. Permitir salvar tarefas em branco
+
+- Arquivo: `new-task.component.ts`
+- Solução: Adicionada validação `if (!this.newTaskTitle.trim()) return;`
+
+## ✨ Funcionalidades Extras Implementadas
+
+- ✅ Adição via tecla Enter
+- 🔠 Ordenação de tarefas (A-Z)
+- 🚫 Filtro de palavras ofensivas (bad-words)
+- 📄 Exportar tarefas para PDF (jsPDF)
+- 🎉 SweetAlert para alertas modernos
+
+
+## Funcionalidades Implementadas
+
+### 🔤 Ordenação de Tarefas de A a Z
+Adiciona um botão que, ao ser clicado, ordena as tarefas pelo título em ordem alfabética.
+- **Arquivo:** `todo.component.ts`
+- **Método:** `sortTodosAZ()`
+- **Interface:** Botão com `(click)="sortTodosAZ()"`
+
+### ⌨️ Adicionar Tarefa com Tecla Enter
+Permite que o usuário adicione uma tarefa pressionando **Enter** no campo de texto.
+- **Arquivo:** `new-task.component.html`
+- **Ação:** `(keydown.enter)="addTask()"` no input
+
+### 🚫 Filtro de Palavras Inadequadas
+Utiliza a biblioteca `bad-words` para censurar palavras indesejadas nos títulos das tarefas.
+- **Instalação:** `yarn add bad-words`
+- **Arquivo:** `new-task.component.ts`
+- **Filtro customizado:** Adição e remoção de palavras específicas
+
+### 📄 Exportar Tarefas em PDF
+Gera um PDF com a lista de tarefas e seus status (concluída ou não).
+- **Biblioteca:** `jsPDF`
+- **Arquivo:** `todo.component.ts`
+- **Método:** `exportToPDF()`
+
+### ⚠️ Substituição de Alertas Nativos por SweetAlert2
+Melhoria na experiência do usuário com alertas visuais personalizados.
+- **Instalação:** `npm install sweetalert2`
+- **Arquivo:** `todo.component.ts`
+- **Alertas personalizados:** `clearAll()` e `clearCompletedTasks()` usam `Swal.fire()`
+
+
+##  **Relatório de Débito Técnico:**
+
+Não obtive exito em relação a limpar o texto preenchido após editar, pois a função editar foi bem complicada para fazer, foi a parte que eu senti um pouco mais de dificuldade e demorei mais.
+
+## **Relatório de Melhorias:**
+
+Implementar horário/data para cada tarefa e quando estiver perto da data ou horário avisar para o usuário que vai expirar o prazo da tarefa.
+
+Adicionar integração com banco de dados ao invés de utilizar local storage, para caso a aplicação se torne mais escalavel e robusta.
+
+
+## **Decisões e Considerações:**
+Minha maior dificuldade foi em entender o funcionamento da função Editar, pois se tratava de um framework que utilizei muito pouco, então tive que ver documentação e até pedir ajuda amigos.
+
+O projeto realmente é um baita de um desafio, fiquei muito empolgado fazendo e corrigindo o projeto.

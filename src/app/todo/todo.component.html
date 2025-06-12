@@ -3,17 +3,20 @@
     <app-new-task></app-new-task>
   </div>
   <div class="todo-buttons">
+    <button (click)="sortTodosAZ()">Ordenar de A a Z</button>
     <button class="toggle-button" (click)="toggleCompletedTasks()">
-      {{ showCompletedTasks ? 'Exibir Tarefas Concluídas' : 'Ocultar Tarefas Concluídas' }}
+      {{ showCompletedTasks ? 'Ocultar Tarefas Concluídas' : 'Exibir Tarefas Concluídas' }}
     </button>
     <button (click)="clearCompletedTasks()">Limpar Tarefas Concluídas</button>
-    <button (click)="clearAll()" [innerHTML]="labelClearAll"></button>
+    <button (click)="clearAll()">Limpar Todas as Tarefas</button>
+    <button (click)="exportToPDF()">Exportar para PDF</button>
   </div>
   <div class="todo-list_container">
     <div class="todo-list_todo">
       <app-todo-item
         *ngFor="let todo of todos"
         [todo]="todo"
+        (onUpdate)="updateTodo($event)"
       ></app-todo-item>
     </div>
   </div>

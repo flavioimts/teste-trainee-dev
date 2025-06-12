@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
+import { jsPDF } from 'jspdf';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-todo',
@@ -32,6 +34,26 @@ export class TodoComponent implements OnInit {
 
     this.todoService.addTodo(newTodo);
   }
+  
+  exportToPDF() {
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text('Lista de Tarefas', 10, 10);
+
+  const tarefas = this.filteredTodos(); 
+
+  tarefas.forEach((todo, index) => {
+    const status = todo.completed ? '[X]' : '[ ]';
+    doc.text(`${status} ${todo.title}`, 10, 20 + index * 10);
+  });
+
+  doc.save('tarefas.pdf');
+}
+
+  sortTodosAZ() {
+  this.todos = this.filteredTodos().sort((a, b) => a.title.localeCompare(b.title));
+}
+
 
   updateTodo(updatedTodo: Todo) {
     this.todoService.updateTodo(updatedTodo);
@@ -42,17 +64,40 @@ export class TodoComponent implements OnInit {
   }
 
   clearAll() {
-    if (this.todos.length > 0 && confirm('Are you sure you want to clear all tasks?')) {
+    if (this.todos.length === 0) return;
+
+
+    Swal.fire({
+    title: 'Tem certeza?',
+    text: 'Você deseja remover todas as tarefas?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sim, limpar tudo!',
+    cancelButtonText: 'Cancelar'}).then((result) => {
+    if (result.isConfirmed) {
       this.todoService.clearAll();
       this.loadTodos();
     }
-  }
+  });
+}
 
-  clearCompletedTasks() {
-    this.todoService.clearCompletedTasks();
-    this.loadTodos();
-  }
+clearCompletedTasks() {
+  if (this.todos.length === 0) return;
 
+  Swal.fire({
+    title: 'Tem certeza?',
+    text: 'Você deseja remover todas as tarefas concluídas?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sim, limpar concluídas!',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.todoService.clearCompletedTasks();
+      this.loadTodos();
+    }
+  });
+}
   toggleCompletedTasks() {
     this.showCompletedTasks = !this.showCompletedTasks;
     this.loadTodos();
