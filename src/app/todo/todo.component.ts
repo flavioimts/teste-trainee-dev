@@ -33,6 +33,11 @@ export class TodoComponent implements OnInit {
     this.todoService.addTodo(newTodo);
   }
 
+  sortTodosAZ() {
+  this.todos = this.filteredTodos().sort((a, b) => a.title.localeCompare(b.title));
+}
+
+
   updateTodo(updatedTodo: Todo) {
     this.todoService.updateTodo(updatedTodo);
   }
