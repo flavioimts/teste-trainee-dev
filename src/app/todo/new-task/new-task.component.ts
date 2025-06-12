@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from 'src/app/shared/services/todo.service';
-import { Filter } from 'bad-words'; 
-
+import { Filter } from 'bad-words';
 
 @Component({
   selector: 'app-new-task',
