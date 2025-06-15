@@ -64,6 +64,6 @@ export class TodoComponent implements OnInit {
   }
 
   get labelClearAll(){
-    return 'Clear All'
+    return 'Limpar Todas as Tarefas';
   }
 }
