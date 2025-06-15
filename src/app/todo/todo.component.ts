@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
 import { jsPDF } from 'jspdf';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-todo',
@@ -43,17 +44,37 @@ export class TodoComponent implements OnInit {
     this.todoService.deleteTodo(todoId);
   }
 
-  clearAll() {
-    if (this.todos.length > 0 && confirm('Are you sure you want to clear all tasks?')) {
-      this.todoService.clearAll();
-      this.loadTodos();
+  async clearAll() {
+    if (this.todos.length > 0) {
+      const result = await Swal.fire({
+        title: 'Tem certeza?',
+        text: 'Esta ação irá remover todas as tarefas!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, limpar tudo',
+        cancelButtonText: 'Cancelar'
+      });
+      if (result.isConfirmed) {
+        this.todoService.clearAll();
+        this.loadTodos();
+        Swal.fire('Limpo!', 'Todas as tarefas foram removidas.', 'success');
+      }
     }
   }
 
-  clearCompletedTasks() {
-    if (confirm('Tem certeza que deseja limpar todas as tarefas concluídas?')) {
+  async clearCompletedTasks() {
+    const result = await Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Esta ação irá remover todas as tarefas concluídas!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, limpar concluídas',
+      cancelButtonText: 'Cancelar'
+    });
+    if (result.isConfirmed) {
       this.todoService.clearCompletedTasks();
       this.loadTodos();
+      Swal.fire('Limpo!', 'Tarefas concluídas removidas.', 'success');
     }
   }
 

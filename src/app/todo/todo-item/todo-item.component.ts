@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from '../../shared/services/todo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-todo-item',
@@ -14,9 +15,18 @@ export class TodoItemComponent {
 
   constructor(private todoService: TodoService) {}
 
-  deleteTodo(): void {
-    if (confirm('Are you sure you want to delete this task?')) {
+  async deleteTodo(): Promise<void> {
+    const result = await Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Esta ação irá remover a tarefa!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, remover',
+      cancelButtonText: 'Cancelar'
+    });
+    if (result.isConfirmed) {
       this.todoService.deleteTodo(this.todo.id);
+      Swal.fire('Removido!', 'A tarefa foi removida.', 'success');
     }
   }
 
