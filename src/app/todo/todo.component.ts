@@ -78,4 +78,8 @@ export class TodoComponent implements OnInit {
     this.todoToEdit = null;
     this.loadTodos();
   }
+
+  sortTodosAZ() {
+    this.todos = [...this.todos].sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'));
+  }
 }
