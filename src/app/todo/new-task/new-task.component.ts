@@ -3,6 +3,7 @@ import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from 'src/app/shared/services/todo.service';
 import {Filter} from 'bad-words'
 import { Title } from '@angular/platform-browser';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -48,8 +49,12 @@ export class NewTaskComponent {
      */
     const taskTitles = this.parseTaskTitles(this.newTaskTitle);
     const filter = new Filter();
-    if(taskTitles.length === 0 ) {
-      alert('Titulo não pode estar vázio');
+    if(taskTitles.length === 0 ){
+      Swal.fire({
+        icon:'warning',
+        title:'Titulo Inválido',
+        text: 'O titulo da tarefa não pode estar vazio'
+      });
       return;
     }
 
@@ -57,7 +62,11 @@ export class NewTaskComponent {
     for(const title of taskTitles){
 
       if(filter.isProfane(title)){
-        alert("A entrada contem linguagem impropria")
+        Swal.fire({
+          icon:'warning',
+          title:'Linguage impropria',
+          text: 'A entrada contem palavras inadequedas'
+        })
         return;
       }
       const newTodo: Todo = {

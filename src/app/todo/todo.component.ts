@@ -3,6 +3,8 @@ import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
 import {jsPDF} from 'jspdf'
 import html2canvas from 'html2canvas'
+import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -85,19 +87,31 @@ export class TodoComponent implements OnInit {
   }
 
   clearAll() {
-    if (this.todos.length > 0 && confirm('Are you sure you want to clear all tasks?')) {
-      this.todoService.clearAll();
-      this.loadTodos();
-    }
+    if (this.todos.length===0) return;
+    Swal.fire({
+      title:"Você tem certeza?",
+      text:"Isso vai apagar todas as tarefas!",
+      icon: "warning",
+      showCancelButton:true,
+      confirmButtonText:'Sim, apagar Tudo',
+      cancelButtonText:'Cancelar'
+    })
+
+
   }
 
   clearCompletedTasks() {
+    if(this.todos.length===0) return;
 
-    //Adição de uma clausula if para confirmar a exclusão.
-    if(this.todos.length > 0 && confirm("Are you sure you want to clear completed tasks?") ){
-      this.todoService.clearCompletedTasks();
-      this.loadTodos();
-    }
+    Swal.fire({
+      title:"Voce tem certeza?",
+      text:"Isso vai apagar todas atividades concluidas",
+      icon:"warning",
+      showCancelButton:true,
+      confirmButtonText:"Sim, apagar tudo!",
+      cancelButtonText:'Cancelar'
+    })
+
   }
 
   toggleCompletedTasks() {
