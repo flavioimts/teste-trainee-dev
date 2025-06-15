@@ -10,6 +10,7 @@ import { TodoService } from '../shared/services/todo.service';
 export class TodoComponent implements OnInit {
   todos: Todo[] = [];
   showCompletedTasks: boolean = true;
+  todoToEdit: Todo | null = null;
 
   constructor(private todoService: TodoService) { }
 
@@ -67,5 +68,14 @@ export class TodoComponent implements OnInit {
 
   get labelClearAll(){
     return 'Limpar Todas as Tarefas';
+  }
+
+  onEditTodo(todo: Todo) {
+    this.todoToEdit = { ...todo };
+  }
+
+  onTaskSaved() {
+    this.todoToEdit = null;
+    this.loadTodos();
   }
 }

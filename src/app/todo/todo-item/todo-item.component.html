@@ -1,4 +1,3 @@
-
 <div class="todo-item">
   <div class="todo-item_content">
     <input
@@ -11,7 +10,7 @@
       [ngClass]="{'completed': todo.completed, 'incomplete': !todo.completed}"
     >{{ todo.title }}</label>
   </div>
-  <button class="todo-item_edit">
+  <button class="todo-item_edit" (click)="onEdit()">
     <i class="fas fa-edit fa-lg"></i> Editar
   </button>
   <button class="todo-item_delete" style="color: black" (click)="deleteTodo()">
