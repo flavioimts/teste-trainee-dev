@@ -3,13 +3,23 @@
     <app-new-task></app-new-task>
   </div>
   <div class="todo-buttons">
+    <button class="order-button" (click) = "sortTodos()" >Ordenar de A-Z</button>
+
+    <button class="pdf-button" (click)="exportToPDF()">Exportar PDF</button>
+
     <button class="toggle-button" (click)="toggleCompletedTasks()">
-      {{ showCompletedTasks ? 'Exibir Tarefas Concluídas' : 'Ocultar Tarefas Concluídas' }}
+      <!-- Invertendo a ordem dos botôes -->
+      {{ showCompletedTasks ? 'Ocultar Tarefas Concluídas' : 'Exibir Tarefas Concluídas' }}
     </button>
+
+    <!--Criação de um novo botão para filtragem-->
     <button (click)="clearCompletedTasks()">Limpar Tarefas Concluídas</button>
-    <button (click)="clearAll()" [innerHTML]="labelClearAll"></button>
+
+
+    <!-- Remoção do atributo e adição do nome em portugues -->
+    <button (click)="clearAll()" >Limpar tudo</button>
   </div>
-  <div class="todo-list_container">
+  <div class="todo-list_container" id="todo-list">
     <div class="todo-list_todo">
       <app-todo-item
         *ngFor="let todo of todos"
