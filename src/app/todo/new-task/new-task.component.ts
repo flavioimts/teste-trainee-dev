@@ -19,6 +19,7 @@ export class NewTaskComponent {
   count = 0;
   addTask() {
     //Adicionado durante o segundo commit
+    //Resolve os bugs 12 e 13 mencionados
     if(!this.newTaskTitle.trim()) {
 
       alert('Titulo não pode estar vázio');
