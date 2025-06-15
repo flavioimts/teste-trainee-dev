@@ -12,6 +12,7 @@ export class NewTaskComponent implements OnChanges {
   @Output() taskSaved = new EventEmitter<void>();
   newTaskTitle: string = '';
   editingId: number | null = null;
+  errorMessage: string = '';
 
   constructor(private todoService: TodoService) { }
 
@@ -23,11 +24,16 @@ export class NewTaskComponent implements OnChanges {
   }
 
   addTask() {
+    if (!this.newTaskTitle || this.newTaskTitle.trim().length === 0) {
+      this.errorMessage = 'O título da tarefa é obrigatório.';
+      return;
+    }
+    this.errorMessage = '';
     if (this.editingId) {
       // Atualizar tarefa existente
       const updatedTodo: Todo = {
         id: this.editingId,
-        title: this.newTaskTitle,
+        title: this.newTaskTitle.trim(),
         completed: this.editTodo?.completed || false
       };
       this.todoService.updateTodo(updatedTodo);
@@ -37,7 +43,7 @@ export class NewTaskComponent implements OnChanges {
       // Criar nova tarefa
       const newTodo: Todo = {
         id: this.todoService.getTodoNewId(),
-        title: this.newTaskTitle,
+        title: this.newTaskTitle.trim(),
         completed: false
       };
       this.todoService.addTodo(newTodo);
