@@ -80,7 +80,7 @@ export class TodoService {
     this.todos = [];
     this.updateLocalStorageAndSave();
   }
-
+  //Invertendo a logica dos elementos filtrados pelo completed tasks
   clearCompletedTasks() {
     this.todos = this.todos.filter(({ completed }) => completed === false);
     this.updateLocalStorageAndSave();
