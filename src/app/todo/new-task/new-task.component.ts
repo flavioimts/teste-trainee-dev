@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
+import { TodoService } from '../../shared/services/todo.service';
 
 @Component({
   selector: 'app-new-task',
