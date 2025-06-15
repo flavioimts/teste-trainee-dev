@@ -1,4 +1,9 @@
+# Desafio de Código: Gerenciador de Tarefas (Angular)
 # Relatório Técnico - Gabriel Costa
+
+> **Deploy em produção:**
+> A aplicação está publicada no Vercel e pode ser acessada em:
+> [https://angular-todo-app-lime-eight.vercel.app/#/todo](https://angular-todo-app-lime-eight.vercel.app/#/todo)
 
 ## 1. Visão Geral da Solução
 
