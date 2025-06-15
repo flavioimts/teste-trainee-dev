@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from '../../shared/services/todo.service';
+import { Filter } from 'bad-words';
 
 @Component({
   selector: 'app-new-task',
@@ -24,6 +25,7 @@ export class NewTaskComponent implements OnChanges {
   }
 
   addTask() {
+    const filter = new Filter();
     const trimmedTitle = this.newTaskTitle ? this.newTaskTitle.trim() : '';
     if (!trimmedTitle) {
       this.errorMessage = 'O título da tarefa é obrigatório.';
@@ -34,6 +36,11 @@ export class NewTaskComponent implements OnChanges {
       const invalidTitles = titles.filter(t => t.length < 10);
       if (invalidTitles.length > 0) {
         this.errorMessage = `Os seguintes títulos devem ter no mínimo 10 caracteres: ${invalidTitles.join(', ')}`;
+        return;
+      }
+      const hasBadWord = titles.find(t => filter.isProfane(t));
+      if (hasBadWord) {
+        this.errorMessage = 'Não é permitido cadastrar tarefas com palavras obscenas.';
         return;
       }
       titles.forEach(title => {
@@ -51,6 +58,10 @@ export class NewTaskComponent implements OnChanges {
     }
     if (trimmedTitle.length < 10) {
       this.errorMessage = 'O título da tarefa deve ter no mínimo 10 caracteres.';
+      return;
+    }
+    if (filter.isProfane(trimmedTitle)) {
+      this.errorMessage = 'Não é permitido cadastrar tarefas com palavras obscenas.';
       return;
     }
     this.errorMessage = '';
