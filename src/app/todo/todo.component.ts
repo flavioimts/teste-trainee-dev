@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
 
@@ -7,11 +7,14 @@ import { TodoService } from '../shared/services/todo.service';
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css']
 })
+
+
+
 export class TodoComponent implements OnInit {
   todos: Todo[] = [];
   showCompletedTasks: boolean = true;
 
-  constructor(private todoService: TodoService) { }
+ constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
     this.loadTodos();
