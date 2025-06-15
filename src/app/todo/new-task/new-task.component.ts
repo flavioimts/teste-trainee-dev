@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from 'src/app/shared/services/todo.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -16,23 +17,51 @@ export class NewTaskComponent {
 
   constructor(private todoService: TodoService) { }
 
-  count = 0;
-  addTask() {
-    //Adicionado durante o segundo commit
-    //Resolve os bugs 12 e 13 mencionados
-    if(!this.newTaskTitle.trim()) {
+  //Criando uma função para fazer o split das entradas por 
+   //Funcionamento
+    /**
+     * A função recebe uma entrada(input) e aplicamos varias
+     * varias funções ao corpo da entrada: split que separa 
+     * a string conforme o caracter entre aspoas simples
+     * , map+trim que para cada nova string remove os espaços
+     * entre um e outro e por fim verificar se há entradas vazias
+     *
+     */
 
+  private parseTaskTitles(input:string): string[]{
+    return input
+    .split('|')
+    .map(title => title.trim())
+    .filter(title=>title.length>0);
+  }
+
+
+  addTask() {
+  
+    //Funcionamento
+    /**
+     * Criamos uma varival taskTitles que recebe os valores de
+     * parseTaskTitles. Depois usamos o foreach para gerar as 
+     * atividades fornecendo a cada uma um ID, Title, e estado
+     * e ao fim adicionamos da lista
+     */
+    const taskTitles = this.parseTaskTitles(this.newTaskTitle);
+    if(taskTitles.length === 0 ) {
       alert('Titulo não pode estar vázio');
       return;
     }
-    const newTodo: Todo = {
+    taskTitles.forEach(title => {
+      const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
-      title: this.newTaskTitle,
+      title,
       completed: false
     };
-    //addTodo sendo chamado duas vezes aqui
-  
     this.todoService.addTodo(newTodo);
+    })
+
+
+    
+    
     this.newTaskTitle = '';
 
   }
