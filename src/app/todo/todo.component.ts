@@ -52,6 +52,8 @@ export class TodoComponent implements OnInit {
   }
 
   clearCompletedTasks() {
+
+    //Adição de uma clausula if para confirmar a exclusão.
     if(this.todos.length > 0 && confirm("Are you sure you want to clear completed tasks?") ){
       this.todoService.clearCompletedTasks();
       this.loadTodos();
