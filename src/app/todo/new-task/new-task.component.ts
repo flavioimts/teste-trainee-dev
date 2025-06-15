@@ -29,6 +29,26 @@ export class NewTaskComponent implements OnChanges {
       this.errorMessage = 'O título da tarefa é obrigatório.';
       return;
     }
+    const titles = trimmedTitle.split('|').map(t => t.trim()).filter(t => t);
+    if (titles.length > 1) {
+      const invalidTitles = titles.filter(t => t.length < 10);
+      if (invalidTitles.length > 0) {
+        this.errorMessage = `Os seguintes títulos devem ter no mínimo 10 caracteres: ${invalidTitles.join(', ')}`;
+        return;
+      }
+      titles.forEach(title => {
+        const newTodo: Todo = {
+          id: this.todoService.getTodoNewId(),
+          title,
+          completed: false
+        };
+        this.todoService.addTodo(newTodo);
+      });
+      this.errorMessage = '';
+      this.newTaskTitle = '';
+      this.taskSaved.emit();
+      return;
+    }
     if (trimmedTitle.length < 10) {
       this.errorMessage = 'O título da tarefa deve ter no mínimo 10 caracteres.';
       return;
