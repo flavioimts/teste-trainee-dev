@@ -1,6 +1,9 @@
 import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
+import {jsPDF} from 'jspdf'
+import html2canvas from 'html2canvas'
+
 
 @Component({
   selector: 'app-todo',
@@ -16,9 +19,46 @@ export class TodoComponent implements OnInit {
 
  constructor(private todoService: TodoService) { }
 
+
+
+
   ngOnInit(): void {
     this.loadTodos();
   }
+
+  //Criação da função para exportar a pagina em pdf. 
+  exportToPDF() {
+  const content = document.getElementById('todo-list');
+ 
+  
+
+  if (!content) return;
+
+  const originalBg = content.style.backgroundColor;
+
+
+  content.style.backgroundColor = 'white';
+
+  // Aqui aguarfamos o DOM atualizar completamente antes de capturar
+  setTimeout(() => {
+    html2canvas(content).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('lista-de-tarefas.pdf');
+    });
+  }, 100); // pequena espera para o DOM estabilizar
+}
+
 
   loadTodos() {
     this.todoService.getTodos().subscribe(todos => {
