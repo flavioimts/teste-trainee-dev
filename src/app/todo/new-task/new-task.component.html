@@ -6,7 +6,7 @@
       class="new-task_input"
       type="text"
       [(ngModel)]="newTaskTitle"
-      placeholder="Descreva aqui de forma breve a sua tarefa."
+      placeholder="Descreva sua tarefa. Use '|' para adicionar múltiplas tarefas."
       (keydown.enter)="addTask()"
     />
     <div *ngIf="errorMessage" class="new-task_error">{{ errorMessage }}</div>
