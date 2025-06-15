@@ -70,6 +70,13 @@ export class TodoComponent implements OnInit {
     return this.showCompletedTasks ? this.todos : this.todos.filter(todo => !todo.completed);
   }
 
+  //Criação de um metodo que usa de services para ordenar as tarefas
+  sortTodos():void{
+    this.todoService.sortTodosByName();
+    this.loadTodos();
+
+  }
+
   get labelClearAll(){
     return 'Clear All'
   }

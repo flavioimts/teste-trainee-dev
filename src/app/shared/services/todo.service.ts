@@ -76,6 +76,16 @@ export class TodoService {
     });
   }
 
+  //Criação de um service para organizar as tarefas
+  sortTodosByName(): void{
+      this.todos.sort((a,b)=>{
+        if(a.completed !== b.completed){
+          return a.completed ? 1:-1
+        }
+        return a.title.localeCompare(b.title)
+      })
+  }
+
   clearAll() {
     this.todos = [];
     this.updateLocalStorageAndSave();

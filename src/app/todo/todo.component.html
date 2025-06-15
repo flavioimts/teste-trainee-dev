@@ -3,11 +3,17 @@
     <app-new-task></app-new-task>
   </div>
   <div class="todo-buttons">
+    <button class="order-button" (click) = "sortTodos()" >Ordenar de A-Z</button>
+
     <button class="toggle-button" (click)="toggleCompletedTasks()">
       <!-- Invertendo a ordem dos botôes -->
       {{ showCompletedTasks ? 'Ocultar Tarefas Concluídas' : 'Exibir Tarefas Concluídas' }}
     </button>
+
+    <!--Criação de um novo botão para filtragem-->
     <button (click)="clearCompletedTasks()">Limpar Tarefas Concluídas</button>
+
+
     <!-- Remoção do atributo e adição do nome em portugues -->
     <button (click)="clearAll()" >Limpar tudo</button>
   </div>
