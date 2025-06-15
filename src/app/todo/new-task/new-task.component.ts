@@ -24,8 +24,13 @@ export class NewTaskComponent implements OnChanges {
   }
 
   addTask() {
-    if (!this.newTaskTitle || this.newTaskTitle.trim().length === 0) {
+    const trimmedTitle = this.newTaskTitle ? this.newTaskTitle.trim() : '';
+    if (!trimmedTitle) {
       this.errorMessage = 'O título da tarefa é obrigatório.';
+      return;
+    }
+    if (trimmedTitle.length < 10) {
+      this.errorMessage = 'O título da tarefa deve ter no mínimo 10 caracteres.';
       return;
     }
     this.errorMessage = '';
@@ -33,7 +38,7 @@ export class NewTaskComponent implements OnChanges {
       // Atualizar tarefa existente
       const updatedTodo: Todo = {
         id: this.editingId,
-        title: this.newTaskTitle.trim(),
+        title: trimmedTitle,
         completed: this.editTodo?.completed || false
       };
       this.todoService.updateTodo(updatedTodo);
@@ -43,7 +48,7 @@ export class NewTaskComponent implements OnChanges {
       // Criar nova tarefa
       const newTodo: Todo = {
         id: this.todoService.getTodoNewId(),
-        title: this.newTaskTitle.trim(),
+        title: trimmedTitle,
         completed: false
       };
       this.todoService.addTodo(newTodo);
