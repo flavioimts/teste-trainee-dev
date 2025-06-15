@@ -7,6 +7,7 @@
       type="text"
       [(ngModel)]="newTaskTitle"
       placeholder="Descreva aqui de forma breve a sua tarefa."
+      (keydown.enter)="addTask()"
     />
     <div *ngIf="errorMessage" class="new-task_error">{{ errorMessage }}</div>
   </div>
