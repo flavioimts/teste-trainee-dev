@@ -8,6 +8,7 @@
       [(ngModel)]="newTaskTitle"
       placeholder="Descreva aqui de forma breve a sua tarefa."
     />
+    <div *ngIf="errorMessage" class="new-task_error">{{ errorMessage }}</div>
   </div>
   <button class="new-task_button" (click)="addTask()">
     Salvar
