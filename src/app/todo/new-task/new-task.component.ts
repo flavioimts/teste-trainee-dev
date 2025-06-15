@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from 'src/app/shared/services/todo.service';
+import {Filter} from 'bad-words'
 import { Title } from '@angular/platform-browser';
 
 
@@ -46,18 +47,26 @@ export class NewTaskComponent {
      * e ao fim adicionamos da lista
      */
     const taskTitles = this.parseTaskTitles(this.newTaskTitle);
+    const filter = new Filter();
     if(taskTitles.length === 0 ) {
       alert('Titulo não pode estar vázio');
       return;
     }
-    taskTitles.forEach(title => {
+
+
+    for(const title of taskTitles){
+
+      if(filter.isProfane(title)){
+        alert("A entrada contem linguagem impropria")
+        return;
+      }
       const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
       title,
       completed: false
     };
     this.todoService.addTodo(newTodo);
-    })
+    }
 
 
     
