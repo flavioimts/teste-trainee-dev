@@ -24,8 +24,8 @@ export class NewTaskComponent {
       title: this.newTaskTitle,
       completed: false
     };
-
-    this.todoService.addTodo(newTodo);
+    //addTodo sendo chamado duas vezes aqui
+  
     this.todoService.addTodo(newTodo);
     this.newTaskTitle = '';
     this.count++
