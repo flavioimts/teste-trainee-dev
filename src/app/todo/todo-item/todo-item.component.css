@@ -8,13 +8,33 @@
   align-items: baseline;
   gap: rem;
   margin-right: 1rem;
+  /* Condição necessaria para funcionamento do overflow*/
+  min-width: 0;
 }
+
+/*Criação de um campo para edição adequada da box que armazenar os botões*/
+
+.todo-box-items{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/*Edicação do Css responsável pela label do nome para que se ajuste caso o titulo seja muito grande*/
 
 .todo-item_content label {
   font-size: 0.85rem;
   cursor: default;
   user-select: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  display: inline-block;
+
 }
+
+  
 
 .todo-item_content input[type="checkbox"] {
   margin-right: 0.7rem;

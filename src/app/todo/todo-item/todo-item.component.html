@@ -9,14 +9,20 @@
     <label
       for="task-{{ todo.id }}"
       [ngClass]="{'completed': todo.completed, 'incomplete': !todo.completed}"
-    >{{ todo.title }}</label>
+    >{{ todo.title }}
+  </label>
   </div>
-
-  <!-- Adição do metodo update ao botão todo-->
+  <!--Adicionando os botôes a uma box-->
+  <div class="todo-box-items">
+    <!-- Adição do metodo update ao botão todo-->
   <button class="todo-item_edit" (click)="updateTodo(todo)">
     <i class="fas fa-edit fa-lg"></i> Editar
   </button>
+
   <button class="todo-item_delete" style="color: black" (click)="deleteTodo()">
     <i class="fas fa-trash-alt fa-lg"></i> Remover
   </button>
+    
+  </div>
+  
 </div>
