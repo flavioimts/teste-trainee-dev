@@ -49,8 +49,10 @@ export class TodoComponent implements OnInit {
   }
 
   clearCompletedTasks() {
-    this.todoService.clearCompletedTasks();
-    this.loadTodos();
+    if (confirm('Tem certeza que deseja limpar todas as tarefas concluídas?')) {
+      this.todoService.clearCompletedTasks();
+      this.loadTodos();
+    }
   }
 
   toggleCompletedTasks() {
