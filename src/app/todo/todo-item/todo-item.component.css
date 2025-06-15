@@ -29,7 +29,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 100%;
+  max-width: 100;
   display: inline-block;
 
 }
@@ -52,12 +52,12 @@
   width: 10px;
   width: fit-content;
 }
+
+/*Remoção de propriedades que faziam o botão se diferenciar*/
 .todo-item_delete {
   width: 10px;
   width: fit-content;
   color: red;
-  background: none;
-  border: none;
   cursor: pointer;
 }
 
